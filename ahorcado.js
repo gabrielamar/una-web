@@ -1,26 +1,26 @@
-
-
+$(document).ready(function() {
 //Diccionario inicial
 var dicc = ["onomastica","mundo","plebeyo","milagro"];
 //elegimos palabra
 var word = dicc[Math.floor((Math.random() * (dicc.length-1)) + 1)];
 //contador de intentos
 var nGuess = 0;
-
 var newWord = "";
 var newWord1 = "";
-
-//la palabra inicial es de huecos
+//la palabra inicial es sólo de guiones
 for(i=0;i< word.length;i++){
   newWord += "-";
 }
+$('#newWord').text(newWord);
 console.log(newWord);
 
-//función probar con una letra o palabra
+//var letra = $('#guess').val();
 
+$("#viajarahora").on('click', guess($('#guess').val()));
+
+//función probar con una letra o palabra
  function guess(x)  {
   nGuess++;
-
   //si se prueba con una palabra, ver si es la correcta
   if(x.length>1 && x == word ){
      console.log("you win");
@@ -34,6 +34,8 @@ console.log(newWord);
 //llamar a la función que genera la nueva palabra con huecos
       newW(x);
       console.log(newWord);
+      $('#newWord').text(newWord);
+
       if(word === newWord){
        console.log("you win");
        nGuess = 0;
@@ -41,7 +43,6 @@ console.log(newWord);
    }
  }
 };
-
 // reemplaza guiones por la letra dada si está en la palabra, y si no, deja guiones
  function newW(y){
    newWord1 = "";
@@ -54,3 +55,5 @@ console.log(newWord);
    }
    newWord = newWord1;
  };
+
+ });
