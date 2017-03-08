@@ -15,25 +15,27 @@
   </header>
 
   <section class="main">
-      <p id='newWord'>
+      <p id='palabraEnProceso'>
 -------------
       </p>
   </section>
 
 <!--<script> $(document).ready(function() {$('#viajarahora').on('click',
-console.log($('#guess').val()));}) </script>
+console.log($('#checkearLetraoPalabra').val()));}) </script>
 -->
-
+<div>
 <form>
   <input type = "text" placeholder= "letra o palabra" size="20px" maxlength="20"
-  name="viajero1" id = "guess" value = "">
-  <label for="guess"> Adivinas?</label>
+    name="LetraoPalabra" id = "LetraoPalabra" value = "">
+  <label for="LetraoPalabra"> Adivinas?</label>
 <br><br>
-  <input type = "submit" value= "" size="20px" maxlength="20"
-  name="viajarahora" id = "viajarahora" class = "viajarahora">
-  <label for="viajarahora"> Si estas listo, dale al boton</label>
+  <input type = "button" value= "" size="20px" maxlength="20"
+    name="enviarIntento" id = "enviarIntento" class = "enviarIntento">
+  <label for="enviarIntento"> Si estas listo, dale al boton</label>
 <br><br>
 </form>
+<span class="resultado", id = "resultado"> </span>
+<div>
 
 </body>
 </html>

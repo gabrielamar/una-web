@@ -1,59 +1,64 @@
 $(document).ready(function() {
-//Diccionario inicial
-var dicc = ["onomastica","mundo","plebeyo","milagro"];
-//elegimos palabra
-var word = dicc[Math.floor((Math.random() * (dicc.length-1)) + 1)];
-//contador de intentos
-var nGuess = 0;
-var newWord = "";
-var newWord1 = "";
-//la palabra inicial es sólo de guiones
-for(i=0;i< word.length;i++){
-  newWord += "-";
+    $('#palabraEnProceso').text(palabraEnProceso);
+    $('#resultado').text('Tienes '+numerodeIntentos+' intentos');
+    $("#enviarIntento").on('click', function(){pintarResultados($('#LetraoPalabra').val())});
+});
+
+var diccionario = ["onomastica","mundo","plebeyo","milagro"];
+var palabraElegida = diccionario[Math.floor((Math.random() * (diccionario.length-1)) + 1)];
+var numerodeIntentos = 10;
+var palabraEnProceso = "";
+var palabraEnProcesoBuffer = "";
+var hasGanado = false;
+var hasPerdido = false;
+
+for(i=0; i< palabraElegida.length; i++){
+    palabraEnProceso += "-";
 }
-$('#newWord').text(newWord);
-console.log(newWord);
 
-//var letra = $('#guess').val();
+function checkearLetraoPalabra(letraoPalabra)  {
+    numerodeIntentos--;
+    if(numerodeIntentos<1){
+          hasPerdido = true;
+          numerodeIntentos = 10;
+  }
 
-$("#viajarahora").on('click', guess($('#guess').val()));
+  if(letraoPalabra.length>1 && letraoPalabra == palabraElegida ){
+        palabraEnProceso = palabraElegida;
+        hasGanado = true;
+        numerodeIntentos = 10;
+  }else{nuevaPalabra(letraoPalabra);}
 
-//función probar con una letra o palabra
- function guess(x)  {
-  nGuess++;
-  //si se prueba con una palabra, ver si es la correcta
-  if(x.length>1 && x == word ){
-     console.log("you win");
-     nGuess = 0;
-   }else{
-//la cantidad máxima de intentos es 20
-     if(nGuess>20){
-     console.log("you loose");
-     nGuess = 0;
-    }else{
-//llamar a la función que genera la nueva palabra con huecos
-      newW(x);
-      console.log(newWord);
-      $('#newWord').text(newWord);
+}
 
-      if(word === newWord){
-       console.log("you win");
-       nGuess = 0;
-     }
-   }
- }
-};
-// reemplaza guiones por la letra dada si está en la palabra, y si no, deja guiones
- function newW(y){
-   newWord1 = "";
-   for(i=0; i< word.length; i++){
-     if(word.charAt(i) == y){
-       newWord1 += y;
-     }else{
-       newWord1 += newWord.charAt(i);
-     }
-   }
-   newWord = newWord1;
+function nuevaPalabra(letra){
+       palabraEnProcesoBuffer = "";
+       for(i=0; i< palabraElegida.length; i++){
+
+         if(palabraElegida.charAt(i) == letra){
+             palabraEnProcesoBuffer += letra;
+         }else{palabraEnProcesoBuffer += palabraEnProceso.charAt(i);}
+       }
+
+       palabraEnProceso = palabraEnProcesoBuffer;
+       if(palabraElegida === palabraEnProceso){
+         hasGanado = true;
+         numerodeIntentos = 10;
+       };
  };
 
- });
+function pintarResultados(y){
+    checkearLetraoPalabra(y);
+    $('#resultado').text('Te quedan '+numerodeIntentos+' intentos');
+    if(hasGanado){
+        $('#resultado').text("Has ganado");
+        $('#palabraEnProceso').text(palabraEnProceso);
+    }
+
+    if(hasPerdido){
+        $('#resultado').text("Has perdido");
+    }else{
+        $('#palabraEnProceso').text(palabraEnProceso);
+     }
+
+}
